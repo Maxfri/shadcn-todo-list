@@ -3,14 +3,13 @@ import { Plus, CalendarIcon } from "lucide-react";
 import { format } from "date-fns";
 
 import {
-  Button,
   Input,
+  Button,
   Calendar,
   Popover,
-  PopoverContent,
   PopoverTrigger,
+  PopoverContent,
 } from "@/shared/ui";
-
 import { useAddTodo } from "../model/useAddTodo";
 
 export const AddTodoForm = () => {
@@ -33,31 +32,39 @@ export const AddTodoForm = () => {
   };
 
   return (
-    <div className="flex space-x-2 mb-4">
-      <Input
-        placeholder="New todo"
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-        className="flex-grow"
-      />
-      <Popover>
-        <PopoverTrigger asChild>
-          <Button variant="outline" className="w-[140px] pl-3 text-left">
-            {selectedDate ? format(selectedDate, "PPP") : "Pick a date"}
-            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent align="start">
-          <Calendar
-            mode="single"
-            selected={selectedDate}
-            onSelect={setSelectedDate}
-          />
-        </PopoverContent>
-      </Popover>
-      <Button onClick={handleAdd}>
-        <Plus className="h-4 w-4" />
-      </Button>
+    <div className="space-y-2 mb-4">
+      <div className="flex">
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button
+              variant="outline"
+              className="w-full sm:w-auto sm:min-w-[140px] pl-3 text-left text-sm"
+            >
+              {selectedDate ? format(selectedDate, "PPP") : "Выберите дату"}
+              <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent align="start" className="w-auto p-0">
+            <Calendar
+              mode="single"
+              selected={selectedDate}
+              onSelect={setSelectedDate}
+              className="w-full"
+            />
+          </PopoverContent>
+        </Popover>
+      </div>
+      <div className="flex items-center space-x-2">
+        <Input
+          placeholder="Новая задача"
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          className="flex-grow"
+        />
+        <Button onClick={handleAdd} className="w-full sm:w-auto">
+          <Plus className="h-4 w-4" />
+        </Button>
+      </div>
     </div>
   );
 };
